@@ -5,6 +5,8 @@ date: "`r format(Sys.Date(), '%d.%m.%Y')`"
 output: html_document
 ---
 
+$ y(x)=b_ox+b_1+b_2x^2 $
+
 ```{r}
 
 # Задаємо параметри функції
@@ -28,7 +30,7 @@ df <- data.frame(x = x, y = y)
 
 library(ggplot2)
 library(dplyr)
-library(rio) 
+library(rio)
 
 df %>%
   ggplot(aes(x = x, y = y)) +
