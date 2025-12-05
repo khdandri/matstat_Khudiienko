@@ -1,0 +1,56 @@
+---
+title: "Створення проєкту зі статистичної обробки даних у стилі literate programming Лабораторна робота No 2"
+author: Khudiienko Andrii, KN-24-1
+date: "`r format(Sys.Date(), '%d.%m.%Y')`"
+output: html_document
+---
+
+
+# Задаємо параметри функції
+b0 <- 2
+b1 <- 3
+b2 <- 1.57
+
+# Оптимізований код з використанням оператора %>% (dplyr)
+df <- data.frame(x = seq(-1, 1, .1)) %>% 
+  mutate(y = b0 + b1 * x + b2 * x^2)
+
+# Вивід перших рядків таблиці даних
+head(df)
+
+# Побудова графіка за допомогою ggplot2
+df %>% 
+  ggplot(aes(x = x, y = y)) +
+  # Додавання лінії
+  geom_line(color = "red", size = 1) + 
+  # Додавання точок
+  geom_point(color = "blue", size = 2) + 
+  # Налаштування заголовків та підписів
+  labs(
+    title = "Графік квадратичної функції",
+    subtitle = paste0("y = ", b0, " + ", b1, "x + ", b2, "x^2"),
+    x = "Значення X",
+    y = "Значення Y"
+  ) +
+  # Використання мінімалістичної теми
+  theme_minimal()
+  
+  # Створення папки для даних, якщо вона не існує
+if (!dir.exists("data")) {
+  dir.create("data")
+}
+
+# 5. Експорт даних на диск (засобами rio)
+export(df, "data/data.csv")
+message("Дані експортовано у файл data/data.csv")
+
+# 6. Імпорт даних з файлу
+dfNew <- import("data/data.csv")
+message("Дані успішно імпортовано у dfNew")
+
+# Візуалізація таблиці засобами knitr::kable
+kable(
+  head(dfNew),
+  caption = "Табл. 1. Фрагмент імпортованої таблиці даних (dfNew)"
+)
+
