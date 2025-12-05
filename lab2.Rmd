@@ -2,7 +2,10 @@
 title: "Створення проєкту зі статистичної обробки даних у стилі literate programming Лабораторна робота N 2"
 author: Khudiienko Andrii, KN-24-1
 date: "`r format(Sys.Date(), '%d.%m.%Y')`"
-output: html_document
+output: html_notebook:
+  toc: yes
+  toc_float: true
+  highlight: tango
 ---
 
 ```{r}
