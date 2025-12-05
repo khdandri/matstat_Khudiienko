@@ -1,60 +1,62 @@
 ---
-title: "Створення проєкту зі статистичної обробки даних у стилі literate programming Лабораторна робота No 2"
+title: "Створення проєкту зі статистичної обробки даних у стилі literate programming Лабораторна робота N 2"
 author: Khudiienko Andrii, KN-24-1
 date: "`r format(Sys.Date(), '%d.%m.%Y')`"
 output: html_document
 ---
-```{r setup, include=FALSE}
-library(tidyverse) # Містить ggplot2, dplyr (для оператора %>%)
-library(rio)
-library(knitr)
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+```{r}
+# Завдання 1 & 2: Вихідна функція та параметри 
 
 # Задаємо параметри функції
 b0 <- 2
 b1 <- 3
 b2 <- 1.57
 
-# Оптимізований код з використанням оператора %>% (dplyr)
-df <- data.frame(x = seq(-1, 1, .1)) %>% 
-  mutate(y = b0 + b1 * x + b2 * x^2)
+# Задаємо область визначення
+x_min <- -1 # Границя x1 (мінімальне значення з seq(-1, 1, .1))
+x_max <- 1  # Границя x2 (максимальне значення з seq(-1, 1, .1))
+x <- seq(x_min, x_max, .1)
 
-# Вивід перших рядків таблиці даних
-head(df)
+# Вихідна функція: y = b0 + b1*x + b2*x^2
+y <- b0 + b1 * x + b2 * x^2
 
-# Побудова графіка за допомогою ggplot2
-df %>% 
-  ggplot(aes(x = x, y = y)) +
-  # Додавання лінії
-  geom_line(color = "red", size = 1) + 
-  # Додавання точок
-  geom_point(color = "blue", size = 2) + 
-  # Налаштування заголовків та підписів
-  labs(
-    title = "Графік квадратичної функції",
-    subtitle = paste0("y = ", b0, " + ", b1, "x + ", b2, "x^2"),
-    x = "Значення X",
-    y = "Значення Y"
-  ) +
-  # Використання мінімалістичної теми
-  theme_minimal()
-  
-  # Створення папки для даних, якщо вона не існує
-if (!dir.exists("data")) {
-  dir.create("data")
-}
+# Створюємо таблицю даних
+df <- data.frame(x = x, y = y)
 
-# 5. Експорт даних на диск (засобами rio)
-export(df, "data/data.csv")
-message("Дані експортовано у файл data/data.csv")
+# --- ФОРМУВАННЯ РЕЗУЛЬТУЮЧОЇ ТАБЛИЦІ (Завдання 7) ---
 
-# 6. Імпорт даних з файлу
-dfNew <- import("data/data.csv")
-message("Дані успішно імпортовано у dfNew")
+# 7. Формуємо результуючу таблицю. (Табл. 2. Параметри функції)
 
-# Візуалізація таблиці засобами knitr::kable
-kable(
-  head(dfNew),
-  caption = "Табл. 1. Фрагмент імпортованої таблиці даних (dfNew)"
+# Створюємо таблицю даних для параметрів
+parameters_df <- data.frame(
+  "Параметр" = c("b0", "b1", "b2", "x1", "x2"),
+  "Значення" = c(b0, b1, b2, x_min, x_max)
 )
+
+# Виводимо таблицю за допомогою knitr::kable
+# Це відтворює "Табл. 2. Параметри функції"
+knitr::kable(parameters_df, 
+             caption = "Табл. 2. Параметри функції", # Заголовок таблиці
+             col.names = c("Параметр", "Значення")) 
+             
+
+
+#  Завдання 3 & 4: ggplot2 та Оптимізація 
+
+ library(ggplot2)
+ library(dplyr)
+
+ df %>%
+   ggplot(aes(x = x, y = y)) +
+     geom_line(color = "red") +
+       geom_point(color = "blue") +
+       labs(
+       title = "Графік функції (ggplot2)",
+       x = "x",
+       y = "y"
+     ) +
+#     theme_minimal()
+```
+
 
