@@ -55,7 +55,7 @@ message("Дані успішно імпортовано у dfNew")
 
 knitr::kable(
   head(dfNew),
-  caption = "Табл. 1. Фрагмент імпортованої таблиці даних (dfNew)"
+  caption = "Табл. 1. Фрагмент таблиці даних (dfNew)"
 )
 
 # Табл.2. Параметри функції
@@ -66,7 +66,7 @@ parameters_df <- data.frame(
 )
 
 knitr::kable(parameters_df,
-             caption = "Табл. 2. Параметри функції", # Заголовок таблиці
+             caption = "Табл. 2. Параметри функції", 
              col.names = c("Параметр", "Значення"))
 ```
 
