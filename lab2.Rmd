@@ -4,7 +4,11 @@ author: Khudiienko Andrii, KN-24-1
 date: "`r format(Sys.Date(), '%d.%m.%Y')`"
 output: html_document
 ---
-
+```{r setup, include=FALSE}
+library(tidyverse) # Містить ggplot2, dplyr (для оператора %>%)
+library(rio)
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 # Задаємо параметри функції
 b0 <- 2
